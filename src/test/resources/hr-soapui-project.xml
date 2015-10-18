@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="c2cd96d6-73a5-4316-b8b8-696950aae768" activeEnvironment="Default" name="hr" resourceRoot="${projectDir}" soapui-version="5.2.1" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="66220a0b-3cea-4e12-8012-a7853c567ba6" wsaVersion="NONE" name="HumanResourceBinding" type="wsdl" bindingName="{http://mycompany.com/hr/definitions}HumanResourceBinding" soapVersion="1_1" anonymous="optional" definition="hr.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/Users/marschall/git/spring-ws-example/src/main/resources/hr.wsdl"><con:part><con:url>file:/Users/marschall/git/spring-ws-example/src/main/resources/hr.wsdl</con:url><con:content><![CDATA[<wsdl:definitions targetNamespace="http://mycompany.com/hr/definitions" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:schema="http://mycompany.com/hr/schemas" xmlns:tns="http://mycompany.com/hr/definitions">
+  <wsdl:types>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="http://mycompany.com/hr/schemas" schemaLocation="hr.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="HolidayRequest">
+    <wsdl:part element="schema:HolidayRequest" name="HolidayRequest"/>
+  </wsdl:message>
+  <wsdl:portType name="HumanResource">
+    <wsdl:operation name="Holiday">
+      <wsdl:input message="tns:HolidayRequest" name="HolidayRequest"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="HumanResourceBinding" type="tns:HumanResource">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="Holiday">
+      <soap:operation soapAction="http://mycompany.com/RequestHoliday"/>
+      <wsdl:input name="HolidayRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="HumanResourceService">
+    <wsdl:port binding="tns:HumanResourceBinding" name="HumanResourcePort">
+      <soap:address location="http://localhost:8080/holidayService/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>file:/Users/marschall/git/spring-ws-example/src/main/resources/hr.xsd</con:url><con:content><![CDATA[<xs:schema elementFormDefault="qualified" targetNamespace="http://mycompany.com/hr/schemas" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:hr="http://mycompany.com/hr/schemas">
+  <xs:element name="HolidayRequest">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="Holiday" type="hr:HolidayType"/>
+        <xs:element name="Employee" type="hr:EmployeeType"/>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="HolidayType">
+    <xs:sequence>
+      <xs:element name="StartDate" type="xs:date"/>
+      <xs:element name="EndDate" type="xs:date"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EmployeeType">
+    <xs:sequence>
+      <xs:element name="Number" type="xs:integer"/>
+      <xs:element name="FirstName" type="xs:string"/>
+      <xs:element name="LastName" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/holidayService/</con:endpoint></con:endpoints><con:operation id="c7d2d667-ae28-4eb6-92ce-d599c37a2f52" isOneWay="false" action="http://mycompany.com/RequestHoliday" name="Holiday" bindingOperationName="Holiday" type="One-Way" inputName="HolidayRequest" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="91e5c7e5-5753-4279-b236-66070c7bd409" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/services</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sch="http://mycompany.com/hr/schemas">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <sch:HolidayRequest>
+         <!--You may enter the following 2 items in any order-->
+         <sch:Holiday>
+            <sch:StartDate>2000-01-01</sch:StartDate>
+            <sch:EndDate>2000-01-01</sch:EndDate>
+         </sch:Holiday>
+         <sch:Employee>
+            <sch:Number>123</sch:Number>
+            <sch:FirstName>First</sch:FirstName>
+            <sch:LastName>Last</sch:LastName>
+         </sch:Employee>
+      </sch:HolidayRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://mycompany.com/RequestHoliday"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:testSuite id="9b381474-c1eb-4134-aef2-552049a958b0" name="HumanResourceBinding TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="46503e3f-95a9-4665-b7ce-82d86ea79908" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Holiday TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="de50b52f-c401-4404-bba7-4cb8ffee6324" name="Holiday"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>HumanResourceBinding</con:interface><con:operation>Holiday</con:operation><con:request name="Holiday" id="473876c8-6150-4641-92cc-400ea4ac83cb"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/services</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sch="http://mycompany.com/hr/schemas">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <sch:HolidayRequest>
+         <!--You may enter the following 2 items in any order-->
+         <sch:Holiday>
+            <sch:StartDate>2000-01-01</sch:StartDate>
+            <sch:EndDate>2000-01-01</sch:EndDate>
+         </sch:Holiday>
+         <sch:Employee>
+            <sch:Number>123</sch:Number>
+            <sch:FirstName>First</sch:FirstName>
+            <sch:LastName>Last</sch:LastName>
+         </sch:Employee>
+      </sch:HolidayRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://mycompany.com/RequestHoliday" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:loadTest id="53757e26-dd3e-4b21-bf93-b83a8171d571" name="LoadTest 1"><con:settings><con:setting id="HttpSettings@close-connections">false</con:setting></con:settings><con:threadCount>5</con:threadCount><con:startDelay>0</con:startDelay><con:sampleInterval>250</con:sampleInterval><con:calculateTPSOnTimePassed>true</con:calculateTPSOnTimePassed><con:resetStatisticsOnThreadCountChange>true</con:resetStatisticsOnThreadCountChange><con:historyLimit>-1</con:historyLimit><con:testLimit>120</con:testLimit><con:limitType>TIME</con:limitType><con:loadStrategy><con:type>Simple</con:type><con:config><testDelay>10</testDelay><randomFactor>0.5</randomFactor></con:config></con:loadStrategy><con:assertion type="Step Status" name="Step Status"/><con:maxAssertionErrors>100</con:maxAssertionErrors><con:cancelExcessiveThreads>true</con:cancelExcessiveThreads><con:strategyInterval>500</con:strategyInterval></con:loadTest><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/></con:soapui-project>
