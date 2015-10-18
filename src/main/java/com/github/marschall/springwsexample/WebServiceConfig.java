@@ -20,14 +20,14 @@ import org.springframework.xml.xsd.XsdSchema;
 @Configuration
 public class WebServiceConfig extends WsConfigurerAdapter {
 
-  @Bean(name = "countries")
+  @Bean(name = "holiday")
   public Wsdl11Definition defaultWsdl11Definition(XsdSchema countriesSchema) {
-    return new SimpleWsdl11Definition(new ClassPathResource("hr.wsdl", getClass()));
+    return new SimpleWsdl11Definition(new ClassPathResource("hr.wsdl"));
   }
 
-  @Bean
+  @Bean(name = "hr")
   public XsdSchema countriesSchema() {
-    return new SimpleXsdSchema(new ClassPathResource("countries.xsd", getClass()));
+    return new SimpleXsdSchema(new ClassPathResource("hr.xsd"));
   }
 
   @Bean
