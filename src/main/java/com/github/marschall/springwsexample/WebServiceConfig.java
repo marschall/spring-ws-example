@@ -9,7 +9,7 @@ import org.springframework.ws.config.annotation.EnableWs;
 import org.springframework.ws.config.annotation.WsConfigurerAdapter;
 import org.springframework.ws.server.EndpointInterceptor;
 import org.springframework.ws.soap.SoapMessageFactory;
-import org.springframework.ws.soap.saaj.SaajSoapMessageFactory;
+import org.springframework.ws.soap.axiom.AxiomSoapMessageFactory;
 import org.springframework.ws.soap.server.endpoint.interceptor.PayloadValidatingInterceptor;
 import org.springframework.ws.wsdl.wsdl11.SimpleWsdl11Definition;
 import org.springframework.ws.wsdl.wsdl11.Wsdl11Definition;
@@ -35,25 +35,28 @@ public class WebServiceConfig extends WsConfigurerAdapter {
     return new HolidayEndpoint();
   }
 
+  @Bean
   public EndpointInterceptor validatingInterceptor() {
     PayloadValidatingInterceptor validatingInterceptor = new PayloadValidatingInterceptor();
+    validatingInterceptor.setXsdSchema(this.countriesSchema());
     validatingInterceptor.setValidateRequest(true);
-    validatingInterceptor.setValidateResponse(true);
+//    validatingInterceptor.setValidateResponse(true);
     return validatingInterceptor;
   }
 
   @Override
   public void addInterceptors(List<EndpointInterceptor> interceptors) {
+    interceptors.add(this.validatingInterceptor());
   }
 
   @Bean
   public SoapMessageFactory messageFactory() {
-    SaajSoapMessageFactory messageFactory = new SaajSoapMessageFactory();
-//    messageFactory.setSoapVersion(SoapVersion.SOAP_12);
-    return messageFactory;
-//    AxiomSoapMessageFactory messageFactory = new AxiomSoapMessageFactory();
-//    messageFactory.setPayloadCaching(true);
+//    SaajSoapMessageFactory messageFactory = new SaajSoapMessageFactory();
+////    messageFactory.setSoapVersion(SoapVersion.SOAP_12);
 //    return messageFactory;
+    AxiomSoapMessageFactory messageFactory = new AxiomSoapMessageFactory();
+//    messageFactory.setPayloadCaching(true);
+    return messageFactory;
   }
 
 }
